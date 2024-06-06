@@ -1,0 +1,8 @@
+{% extends 'toplayout.html' %}
+
+{% block content %}
+<h1>Log In Successful</h1>
+<p>Thank you for registering, {{ user.first_name }}!</p>
+<p>Your user ID is: {{ user.id }}</p>
+<p>Your role is: {{ user.get_role_name }}</p>
+{% endblock %}

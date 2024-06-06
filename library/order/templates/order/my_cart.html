@@ -1,0 +1,35 @@
+{% extends 'toplayout.html' %}
+
+{% block content %}
+<h2>Your Card</h2>
+
+{% if user_orders %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Book Title</th>
+            <th>Quantity</th>
+            <th>Return book till</th>
+            <th>Remove from order</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in user_orders %}
+        <tr>
+            <td>{{ order.book.name }}</td>
+            <td> 1 </td>
+            <td> {{ order.plated_end_at }} </td>
+            <td>
+                <form method="post" action="{% url 'remove_from_order' order.book.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-primary ms-auto ms-2" type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Your card is empty.</p>
+{% endif %}
+{% endblock %}

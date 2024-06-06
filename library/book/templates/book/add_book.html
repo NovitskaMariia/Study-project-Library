@@ -1,0 +1,23 @@
+{% extends 'toplayout.html' %}
+
+{% block content %}
+<h1>Add new book</h1>
+<small id="emailHelp" class="form-text text-muted">Please, fill these fields to add book</small>
+
+<form method="post" action="{% url 'add_book' %}" name="register_form">
+    {% csrf_token %}
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    {{ form.as_p }} 
+    
+    <div class="form-group">
+        <p> </p>
+    </div>
+    <button type="submit" class="btn btn-primary">Add book</button>
+</form>
+
+{% endblock %}

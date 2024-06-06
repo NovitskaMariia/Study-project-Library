@@ -1,0 +1,47 @@
+{% extends 'toplayout.html' %}
+
+{% block content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Middle name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Created at</th>
+            <th scope="col">Role</th>
+            <th scope="col">Is active</th>
+            <th scope="col">Is staff</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ user_upd.id }}</td>
+            <td>{{ user_upd.first_name }}</td>
+            <td>{{ user_upd.last_name }}</td>
+            <td>{{ user_upd.middle_name }}</td>
+            <td>{{ user_upd.email }}</td>
+            <td>{{ user_upd.created_at }}</td>            
+            <td>{{ user_upd.get_role_name }}</td>   
+            <td>{{ user_upd.is_active}}</td>        
+            <td>{{ user_upd.is_staff}}</td>        
+        </tr>            
+    </tbody>
+</table>
+<h2>Update user info</h2>
+<form method="post" action="{% url 'user_info' %}?id={{ user_upd.id }}">
+    {% csrf_token %}
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+    {{ form.as_p }}    
+    <div class="form-group">
+        <p> </p>
+    </div>
+    <button type="submit" class="btn btn-primary">Update user info</button>
+</form>
+
+{% endblock %}

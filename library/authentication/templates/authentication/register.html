@@ -1,0 +1,23 @@
+{% extends 'toplayout.html' %}
+
+{% block content %}
+<h1>Register</h1>
+<small id="emailHelp" class="form-text text-muted">Please, fill these fields to register</small>
+
+<form method="post" action="{% url 'register' %}" name="register_form">
+    {% csrf_token %}
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    {{ form.as_p }}    
+    
+    <div class="form-group">
+        <p> </p>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+{% endblock %}

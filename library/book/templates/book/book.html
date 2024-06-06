@@ -1,0 +1,66 @@
+{% extends 'toplayout.html' %}
+
+<!-- {% block title %}
+Books - Library
+{% endblock %} -->
+
+{% block content %}
+<h2>Books</h2>
+{% if user.is_authenticated and user.role == 1%}
+<a href="{% url 'add_book' %}" class="btn btn-primary">Add new book</a>
+{% endif %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id <input class="form-control" type="text" id="filterId" placeholder="Filter ID"></th>
+            <th>Name <input class="form-control" type="text" id="filterName" placeholder="Filter Name"></th>
+            <th>Authors <input class="form-control" type="text" id="filterAuthors" placeholder="Filter Authors"></th>
+            <th>Count <input class="form-control" type="text" id="filterCount" placeholder="Filter Count"></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr onclick="window.location.href='info/?id={{ book.id }}';">
+            <td>{{ book.id }}</td>
+            <td>{{ book.name }}</td>
+            <td>{{ book.authors_name }}</td>
+            <td>{{ book.count }}</td>
+            {% if user.is_authenticated and user.role == 0 %}
+            <td>
+                <form method="post" action="{% url 'add_to_cart' book.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="book_id" value="{{ book.id }}">
+                    <button class="btn btn-primary ms-auto ms-2" type="submit">Add to cart</button>
+                </form>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    document.querySelectorAll('.form-control').forEach(item => {
+        item.addEventListener('keyup', filterTable);
+    });
+
+    function filterTable() {
+        const filterId = document.getElementById('filterId').value.toUpperCase();
+        const filterName = document.getElementById('filterName').value.toUpperCase();
+        const filterAuthors = document.getElementById('filterAuthors').value.toUpperCase();
+        const rows = document.querySelectorAll('tbody tr');
+
+        rows.forEach(row => {
+            const id = row.querySelector('td:nth-child(1)').textContent.toUpperCase();
+            const name = row.querySelector('td:nth-child(2)').textContent.toUpperCase();
+            const authors = row.querySelector('td:nth-child(3)').textContent.toUpperCase(); // Change index to 3
+
+            if (id.includes(filterId) && name.includes(filterName) && authors.includes(filterAuthors)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
+{% endblock %}

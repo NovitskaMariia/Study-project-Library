@@ -1,0 +1,52 @@
+{% extends 'toplayout.html' %}
+
+{% block content %}
+<a href="{% url 'add_author' %}" class="btn btn-primary">Add new author</a>
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Patronymic</th>
+            <th scope="col">Books by this author</th>
+            <th scope="col">Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for author in authors %}
+        <tr>
+            <td>{{ author.id }}</td>
+            <td>{{ author.name }}</td>
+            <td>{{ author.surname }}</td>
+            <td>{{ author.patronymic }}</td>
+            <td>
+                {% for book in author.books.all %}
+                {{ book.name }}<br>
+                {% endfor %}
+            </td>
+            <td>
+                {% if not author.books.all %}
+                <form method="post" action="{% url 'remove_author' author.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-primary ms-auto ms-2" type="submit">Remove</button>
+                </form>
+                {% else %}
+                Can't be removed
+                {% endif %}
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
