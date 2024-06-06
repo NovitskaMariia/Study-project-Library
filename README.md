@@ -1,10 +1,6 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/uB-Ns0_Z)
 # Django_Forms
 
-Select a project (one of the team members) from the previous sprint and copy the project.
-
-Update POST/PUT methods and templates for adding/editing functionality using Django forms. 
-
-
-As a result of this sprint (except for the code in the repository) you should get a short video (2-10 minutes) showing
-the functionality of the program.
+Educational library project using Django, with a simple UI using Bootstrap.
+On this site, we can register as either a regular user or a librarian. Depending on the role, different functionalities will be available.
+As a user, I can browse books and add them to a cart to borrow.
+As a librarian, I can add and remove books from the database using the site's UI, do the same with authors, and associate authors with books.
